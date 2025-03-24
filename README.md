@@ -23,8 +23,6 @@ Optional: RabbitMQ/Kafka Integration
 
 Troubleshooting
 
-License
-
 🎯 Project Overview
 This application provides RESTful APIs to:
 
@@ -60,17 +58,12 @@ Optional: RabbitMQ/Kafka (if required)
 
 🚀 Getting Started
 1. Clone the Repository
-bash
-Copy
-Edit
-git clone https://github.com/your-repo/asynchronous-data-pipeline.git
+git clone https://github.com/NehaSharma0504/async-task-processor.git
 cd asynchronous-data-pipeline
 2. Configure Database
 Set the database credentials in src/main/resources/application.properties:
 
 properties
-Copy
-Edit
 # PostgreSQL Configuration
 spring.datasource.url=jdbc:postgresql://localhost:5432/task_db
 spring.datasource.username=your_db_username
@@ -78,10 +71,10 @@ spring.datasource.password=your_db_password
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # Optional: Use MySQL instead
-# spring.datasource.url=jdbc:mysql://localhost:3306/task_db
-# spring.datasource.username=your_db_username
-# spring.datasource.password=your_db_password
-# spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+ spring.datasource.url=jdbc:mysql://localhost:3306/task_db
+ spring.datasource.username=your_db_username
+ spring.datasource.password=your_db_password
+ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # Hibernate Properties
 spring.jpa.hibernate.ddl-auto=update
@@ -92,16 +85,13 @@ HTTP Method	Endpoint	Description
 POST	/api/tasks/submit	Submit a new task
 GET	/api/tasks	Retrieve all submitted tasks
 GET	/api/tasks/{id}	Get status of a specific task
+
 ⚙️ Database Setup
 1. Create Database
 sql
-Copy
-Edit
 CREATE DATABASE task_db;
 2. Create tasks Table
 sql
-Copy
-Edit
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -111,24 +101,14 @@ CREATE TABLE tasks (
 );
 ▶️ Running the Application
 1. Build and Package
-bash
-Copy
-Edit
 mvn clean package
 2. Run the Application
-bash
-Copy
-Edit
 java -jar target/asynchronous-data-pipeline-0.0.1-SNAPSHOT.jar
 3. Access the Application
 API Base URL: http://localhost:8080/api/tasks
 
 🧪 Unit Tests
 Run unit tests using Maven:
-
-bash
-Copy
-Edit
 mvn test
 📡 Optional: RabbitMQ/Kafka Integration
 To enable message broker integration:
@@ -144,12 +124,5 @@ Ensure the database is running and credentials are correct.
 
 Check application logs for any errors:
 
-bash
-Copy
-Edit
-tail -f logs/application.log
 If the application fails to start, ensure required ports (e.g., 8080) are free.
-
-📄 License
-This project is licensed under the MIT License.
 
