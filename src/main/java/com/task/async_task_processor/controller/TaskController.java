@@ -15,10 +15,6 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
-
     @PostMapping("/submit")
     public Task submitTask(@RequestParam String name, @RequestParam String payload) {
         return taskService.submitTask(name, payload);

@@ -4,6 +4,7 @@ import com.task.async_task_processor.entity.Task;
 import com.task.async_task_processor.enums.TaskStatus;
 import com.task.async_task_processor.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,9 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    @Autowired
+    private AsyncTaskProcessor asyncTaskProcessor;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
 
     public Task submitTask(String name, String payload) {
         Task task = new Task();
@@ -29,7 +29,7 @@ public class TaskService {
         task.setCreatedAt(LocalDateTime.now());
         task.setUpdatedAt(LocalDateTime.now());
         task = taskRepository.save(task);
-        processTaskAsync(task);
+        asyncTaskProcessor.processTaskAsync(task);
         return task;
     }
 
@@ -39,24 +39,5 @@ public class TaskService {
 
     public Optional<Task> getTaskById(Long taskId) {
         return taskRepository.findById(taskId);
-    }
-
-    @Async
-    public void processTaskAsync(Task task) {
-        try {
-            task.setStatus(TaskStatus.PROCESSING);
-            task.setUpdatedAt(LocalDateTime.now());
-            taskRepository.save(task);
-
-            // Simulate time-consuming processing
-            Thread.sleep(5000);
-
-            task.setStatus(TaskStatus.COMPLETED);
-        } catch (Exception e) {
-            task.setStatus(TaskStatus.FAILED);
-        } finally {
-            task.setUpdatedAt(LocalDateTime.now());
-            taskRepository.save(task);
-        }
     }
 }
